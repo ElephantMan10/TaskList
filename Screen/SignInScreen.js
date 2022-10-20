@@ -1,6 +1,6 @@
 import React from "react"
 import { View, Text, Button } from "react-native"
-import { TokenContext, UsernameContext } from "../Contexte/Contexte"
+import { TokenContext, UsernameContext } from "../Context/Context"
 
 export default function SignInScreen ({ navigation }) {
     return (
@@ -10,15 +10,7 @@ export default function SignInScreen ({ navigation }) {
             {([username, setUsername]) => {
                 return (
                     <>
-                    <Text>Sign in</Text>
-                    <Button
-                        title="Sign in"
-                        onPress={() => {
-                        setUsername("John")
-                        setToken("12345")
-                        navigation.navigate("Home")
-                        }}
-                    />
+
                     </>
                 )
             }}

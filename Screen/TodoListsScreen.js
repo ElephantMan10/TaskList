@@ -2,7 +2,8 @@
 
 import React from 'react';
 import { View, Text, Button } from 'react-native';
-import { TokenContext, UsernameContext } from '../Contexte/Contexte';
+import { TokenContext, UsernameContext } from '../Context/Context';
+import { TodoLists } from './TodoLists';
 
 export default function TodoListsScreen ({ navigation }) {
     return (
@@ -10,20 +11,7 @@ export default function TodoListsScreen ({ navigation }) {
             {([token, setToken]) => (
                 <UsernameContext.Consumer>
                     {([username, setUsername]) => {
-                        return (
-                            <>
-                                <Text>Welcome {username} !</Text>
-                                <Text>Your token is {token}</Text>
-                                <Button
-                                    title="Sign out"
-                                    onPress={() => {
-                                        setUsername("")
-                                        setToken("")
-                                        navigation.navigate("SignOut")
-                                    }}
-                                />
-                            </>
-                        )
+                        
                     }}
                 </UsernameContext.Consumer>
             )}
