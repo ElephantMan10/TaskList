@@ -1,24 +1,31 @@
 import React, { useState } from 'react'
 import { Text, TextInput, Button, View, StyleSheet, ActivityIndicator } from 'react-native'
 
-import { signIn } from '../API/todoAPI'
+import { signUp } from '../API/todoAPI'
 
-import { TokenContext, UsernameContext } from '../Context/Context'
+import { TokenContext } from '../Context/Context'
+import { UsernameContext } from '../Context/Context'
 
-export default function SignIn() {
+export default function SignUp() {
     const [login, setLogin] = useState('')
     const [password, setPassword] = useState('')
+    const [copyPassword, setCopyPassword] = useState('')
     const [error, setError] = useState('')
     const [visible, setVisible] = useState(true)
 
-    const getSignedIn = (setToken, setUsername) => {
+    const getSignedUp = (setToken, setUsername) => {
         setError('')
-        if (login == '' || password == '') return
+        if (login == '' || password == '' || copyPassword == '') return
+        if (password != copyPassword) {
+            setError("Passwords don't match")
+            return
+        }
         setVisible(false)
-        signIn(login, password)
+        signUp(login, password)
             .then(token => {
                 setUsername(login)
                 setToken(token)
+                console.log('token', token)
             })
             .catch(err => {
                 setError(err.message)
@@ -41,7 +48,7 @@ export default function SignIn() {
                                                 style={styles.text_input}
                                                 onChangeText={setLogin}
                                                 onSubmitEditing={() =>
-                                                    getSignedIn(setToken, setUsername)
+                                                    getSignedUp(setToken, setUsername)
                                                 }
                                                 value={login}
                                             />
@@ -53,14 +60,26 @@ export default function SignIn() {
                                                 onChangeText={setPassword}
                                                 secureTextEntry={true}
                                                 onSubmitEditing={() =>
-                                                    getSignedIn(setToken, setUsername)
+                                                    getSignedUp(setToken, setUsername)
                                                 }
                                                 value={password}
                                             />
                                         </View>
+                                        <View style={{ flexDirection: 'row' }}>
+                                            <Text style={styles.label}>Password Again</Text>
+                                            <TextInput
+                                                style={styles.text_input}
+                                                onChangeText={setCopyPassword}
+                                                secureTextEntry={true}
+                                                onSubmitEditing={() =>
+                                                    getSignedUp(setToken, setUsername)
+                                                }
+                                                value={copyPassword}
+                                            />
+                                        </View>
                                         <Button
-                                            onPress={() => getSignedIn(setToken, setUsername)}
-                                            title='Sign In'
+                                            onPress={() => getSignedUp(setToken, setUsername)}
+                                            title='Sign Up'
                                         />
                                         {error ? (
                                             <Text style={styles.text_error}>{error}</Text>
@@ -88,6 +107,7 @@ const styles = StyleSheet.create({
         color: 'red'
     },
     text_input: {
+        //borderWidth: 1,
         backgroundColor: 'white',
         margin: 5
     }

@@ -1,9 +1,16 @@
 import React from 'react'
 import { View, Text, Button } from 'react-native'
-import { TokenContext, UsernameContext } from "../Context/Context"
+import { TokenContext } from "../Context/Context"
 
-export default function SignOutScreen ({ navigation, route }) {
+export default function SignOutScreen({ navigation }) {
     return (
-        <Button title='Sign me out' onPress={() => {navigation.navigate('Home'); }} />
+        <TokenContext.Consumer>
+            {([token, setToken]) => (
+                <>
+                    <Text>Sign Out</Text>
+                    <Button title='Sign me out' onPress={() => setToken(null)} />
+                </>
+            )}
+        </TokenContext.Consumer>
     )
 }

@@ -1,21 +1,19 @@
 import React from "react"
-import { View, Text, Button } from "react-native"
-import { TokenContext, UsernameContext } from "../Context/Context"
+import { View, Text, Button, TextInput } from "react-native"
+import { Link } from "@react-navigation/native"
+import SignIn from 'components/SignIn'
 
-export default function SignInScreen ({ navigation }) {
-    return (
-      <TokenContext.Consumer>
-        {([token, setToken]) => (
-          <UsernameContext.Consumer>
-            {([username, setUsername]) => {
-                return (
-                    <>
-
-                    </>
-                )
-            }}
-          </UsernameContext.Consumer>
-        )}
-      </TokenContext.Consumer>
-    )
-  }
+export default function SignInScreen() {
+  return (
+    <View style={{
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center'
+    }}>
+      <SignIn />
+      <Text>
+        Don't have an account ? <Link style={{ textDecorationLine: 'underline' }} to={{ screen: 'SignUp' }}>Sign Up</Link>
+      </Text>
+    </View>
+  )
+}
