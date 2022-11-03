@@ -1,7 +1,7 @@
 import React from "react"
 import { View, Text, Button, TextInput } from "react-native"
 import { Link } from "@react-navigation/native"
-import SignIn from 'components/SignIn'
+import SignIn from '../components/SignIn'
 
 export default function SignInScreen() {
   return (

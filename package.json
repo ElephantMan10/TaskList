@@ -26,7 +26,8 @@
     "react-navigation": "^4.4.4"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.9"
+    "@babel/core": "^7.12.9",
+    "webpack": "^4.43.0"
   },
   "private": true
 }
