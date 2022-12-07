@@ -1,4 +1,4 @@
-const API_URL = 'http://192.168.56.101:4000'
+const API_URL = 'http://127.0.0.1:4000'
 
 const SIGN_IN =
   'mutation($username:String!, $password:String!){signIn(username:$username, password:$password)}'
