@@ -40,6 +40,16 @@ export default function TodoLists ({navigation}) {
         }
     }
 
+    const delTodoList = (id) => {
+        deleteTodoList(id, username, token)
+            .then(() => {
+                setTodoLists(todoLists.filter(todoList => todoList.id !== id));
+            })
+            .catch(error => {
+                setError(true);
+            });
+    }
+
     if (loading) {
         return <Text>Loading...</Text>;
     }
@@ -49,31 +59,63 @@ export default function TodoLists ({navigation}) {
     }
 
     return (
-        <View>
-            <Text style={styles.titre}>Todo Lists</Text>
+        <View style={{flex:1}}>
+            <Text style={styles.title}>Todo Lists</Text>
             <FlatList
                 data={todoLists}
+                style={styles.todoList}
                 renderItem={({item}) => (
-                    <Text>{item.title}</Text>
+                    // <Button title={item.title} onPress={() => navigation.navigate('TodoList', {todoListId: item.id})} />
+                    <>
+                        <Text style={styles.todoList}>{item.title}</Text>   
+                        <View style={{flexDirection:'row', justifyContent:'center'}}>
+                            <Button title="Open" onPress={() => navigation.navigate('TodoList', {todoListId: item.id})} />
+                            <Button title="Delete" onPress={() => delTodoList(item.id)} />
+                        </View>
+                    </>
                 )}
                 keyExtractor={item => item.id}
             />
             <TextInput 
+                style={styles.input}
                 placeholder="Todo List Name"
                 onChangeText={setTodoListName}
                 value={todoListName}
             />
-            <Button title="Add Todo List" onPress={addTodoList} />
+            <Button title="Add Todo List" onPress={addTodoList} style={styles.addButton} />
+            <View style={{margin:25}}> </View>
         </View>
     );
 }
 
+//modifier le code pour faire agir un Navigation et ainsi naviguer entre la liste des todoLists et la liste des todoItems
+
 const styles = StyleSheet.create({
-    titre: {
+    view: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    title: {
         fontSize: 30,
         fontWeight: 'bold',
         textAlign: 'center',
         marginTop: 20,
         marginBottom: 20,
     },
+    input: {
+        height: 40,
+        margin: 12,
+        borderWidth: 1,
+    },
+    todoList: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        marginTop: 5,
+        marginBottom: 5,
+    },
+    addButton: {
+        marginTop: 20,
+    }
 })

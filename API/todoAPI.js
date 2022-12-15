@@ -44,8 +44,8 @@ const CREATE_TODO_LIST =
   }`
 
 const DELETE_TODO_LIST =
-  `mutation($title: String!, $username: String!) {
-    deleteTaskLists(where: { title: $title, owner: { username: $username } }) {
+  `mutation($id: ID!, $username: String!) {
+    deleteTaskLists(where: { id: $id, owner: { username: $username } }) {
       nodesDeleted
     }
   }`
@@ -230,7 +230,7 @@ export function createTodoList (title, username, token) {
     })
 }
 
-export function deleteTodoList (title, username, token) {
+export function deleteTodoList (id, username, token) {
   return fetch(API_URL, {
     method: 'POST',
     headers: {
@@ -240,7 +240,7 @@ export function deleteTodoList (title, username, token) {
     body: JSON.stringify({
       query: DELETE_TODO_LIST,
       variables: {
-        title: title,
+        id: id,
         username: username
       }
     })

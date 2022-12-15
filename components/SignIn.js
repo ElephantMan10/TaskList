@@ -61,6 +61,7 @@ export default function SignIn() {
                                         <Button
                                             onPress={() => getSignedIn(setToken, setUsername)}
                                             title='Sign In'
+                                            style={styles.signInButton}
                                         />
                                         {error ? (
                                             <Text style={styles.text_error}>{error}</Text>
@@ -90,5 +91,12 @@ const styles = StyleSheet.create({
     text_input: {
         backgroundColor: 'white',
         margin: 5
-    }
+    },
+    signInButton: {
+        backgroundColor: 'green',
+        color: 'white',
+        padding: 10,
+        borderRadius: 5,
+        margin: 10,
+    },
 })
