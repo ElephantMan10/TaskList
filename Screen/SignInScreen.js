@@ -12,7 +12,11 @@ export default function SignInScreen() {
         }}>
             <SignIn />
             <Text>
-                Don't have an account ? <Link style={{ textDecorationLine: 'underline' }} to={{ screen: 'SignUp' }}>Sign Up</Link>
+                Don't have an account ?{' '} 
+                <Link style={{ textDecorationLine: 'underline' }} 
+                    to={{ screen: 'SignUp' }}>
+                    Sign Up
+                </Link>
             </Text>
         </View>
     )
