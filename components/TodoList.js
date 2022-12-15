@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { StyleSheet, View, TextInput, Button, Text, FlatList, Switch } from 'react-native';
 
-import todoData from '../Helpers/todoData';
+// import todoData from '../Helpers/todoData';
+import { getTodoList, addTodo, deleteTodo, updateTodo } from '../API/todoAPI';
 import TodoItem from './TodoItem';
 
-export default function TodoList() {
+export default function TodoList(props) {
+    const username = props.username;
+    const todoData = getTodoList(username);
     const [count, setCount] = useState(todoData.filter((item)=>item.done).length);
     const [listToDo, setListToDo] = useState(todoData);
     const [newTodoText, setNewTodoText] = useState('');
