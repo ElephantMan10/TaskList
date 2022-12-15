@@ -13,7 +13,7 @@ export default function TodoItem(props){
     return (
         <View style={styles.content}>
             <TouchableOpacity onPress={deleteItem}>
-                <Image source={require('../assets/poubelle.png')} style={styles.image}/>
+                <Image source={require('../assets/trash-can-outline.png')} style={styles.image}/>
             </TouchableOpacity>
             <Text style={[styles.text_item, { textDecorationLine: done ? 'line-through' : 'none' }]}>{props.item.content}</Text>
             <Switch
