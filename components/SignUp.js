@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { Text, TextInput, Button, View, StyleSheet, ActivityIndicator } from 'react-native'
 
 import { signUp } from '../API/todoAPI'
