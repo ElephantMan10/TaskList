@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text, Button } from 'react-native'
-import TodoLists from './TodoLists'
+import TodoLists from '../components/TodoLists'
 import { getTodoLists } from '../API/todoAPI'
 import { TokenContext } from '../Context/Context'
 
