@@ -1,5 +1,5 @@
 import React from 'react'
-import TodoLists from '../components/TodoList'
+import TodoList from '../components/TodoList'
 
 export default function TodoListScreen({navigation}){
     return (

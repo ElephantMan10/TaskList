@@ -69,7 +69,7 @@ export default function TodoLists ({navigation}) {
                     <>
                         <Text style={styles.todoList}>{item.title}</Text>   
                         <View style={{flexDirection:'row', justifyContent:'center'}}>
-                            <Button title="Open" onPress={() => navigation.navigate('TodoList', {todoListId: item.id})} />
+                            <Button title="Open" onPress={() => navigation.navigate('Todo List', {todoListId: item.id})} />
                             <Button title="Delete" onPress={() => delTodoList(item.id)} />
                         </View>
                     </>

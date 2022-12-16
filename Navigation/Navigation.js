@@ -3,14 +3,27 @@ import { View, Text } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { createStackNavigator } from '@react-navigation/stack'
 
 import TodoListsScreen from '../Screen/TodoListsScreen'
 import HomeScreen from '../Screen/HomeScreen'
 import SignInScreen from '../Screen/SignInScreen'
 import SignOutScreen from '../Screen/SignOutScreen'
 import SignUpScreen from '../Screen/SignUpScreen'
+import TodoListScreen from '../Screen/TodoListScreen'
 
 import { TokenContext } from '../Context/Context'
+
+const Stack = createStackNavigator()
+
+function TodoNavigation () {
+    return (
+       <Stack.Navigator>
+            <Stack.Screen name='Todo Lists' component={TodoListsScreen} />
+            <Stack.Screen name='Todo List' component={TodoListScreen} />
+       </Stack.Navigator> 
+    )
+}
 
 const Tab = createBottomTabNavigator()
 
@@ -63,7 +76,7 @@ export default function Navigation () {
                             })}
                         >
                             <Tab.Screen name='Home' component={HomeScreen} />
-                            <Tab.Screen name='TodoLists' component={TodoListsScreen} />
+                            <Tab.Screen name='TodoLists' component={TodoNavigation} />
                             <Tab.Screen name='SignOut' component={SignOutScreen} />
                         </Tab.Navigator>
                     )}
