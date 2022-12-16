@@ -62,6 +62,7 @@ export default function SignIn() {
                                             onPress={() => getSignedIn(setToken, setUsername)}
                                             title='Sign In'
                                             style={styles.signInButton}
+                                            color='green'
                                         />
                                         {error ? (
                                             <Text style={styles.text_error}>{error}</Text>

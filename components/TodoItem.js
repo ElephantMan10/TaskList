@@ -11,6 +11,7 @@ export default function TodoItem(props){
     , [props.item.done]);
     
     return (
+        console.log("TodoItem props.item: ", props.item),
         <View style={styles.content}>
             <TouchableOpacity onPress={deleteItem}>
                 <Image source={require('../assets/trash-can-outline.png')} style={styles.image}/>

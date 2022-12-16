@@ -80,6 +80,7 @@ export default function SignUp() {
                                         <Button
                                             onPress={() => getSignedUp(setToken, setUsername)}
                                             title='Sign Up'
+                                            color='green'
                                         />
                                         {error ? (
                                             <Text style={styles.text_error}>{error}</Text>

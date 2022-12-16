@@ -7,7 +7,7 @@ export default function SignOutScreen({ navigation }) {
         <TokenContext.Consumer>
             {([token, setToken]) => (
                 <>
-                    <Button title='Sign me out' onPress={() => setToken(null)} style={styles.signOutButton} />
+                    <Button color='red' title='Sign me out' onPress={() => setToken(null)} style={styles.signOutButton} />
                 </>
             )}
         </TokenContext.Consumer>

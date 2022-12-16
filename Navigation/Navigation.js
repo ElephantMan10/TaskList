@@ -65,7 +65,7 @@ export default function Navigation () {
                                 tabBarIcon: ({focused, color, size}) => {
                                     let iconName;
                                     if (route.name === 'Home') {
-                                        iconName = !focused ? 'ios-information-circle' : 'ios-information-circle-outline';
+                                        iconName = focused ? 'ios-information-circle-sharp' : 'ios-information-circle-outline';
                                     } else if (route.name === 'TodoLists') {
                                         iconName = !focused ? 'ios-checkbox-outline' : 'ios-checkbox-sharp';
                                     } else if (route.name === 'SignOut') {

@@ -15,9 +15,9 @@ const GET_TODO_LISTS =
   }`
 
 const GET_TODO_LIST_ITEMS = 
-  `query($title: String!, $username: String) {
+  `query($id: ID!, $username: String) {
     tasks(
-      where: { belongsTo: { title: $title, owner: { username: $username } } }
+      where: { belongsTo: { id: $id, owner: { username: $username } } }
     ) {
       id
       content
@@ -172,7 +172,7 @@ export function getTodoLists (username, token) {
     })
 }
 
-export function getTodoListItems (title, username, token) {
+export function getTodoListItems (id, username, token) {
   return fetch(API_URL, {
     method: 'POST',
     headers: {
@@ -182,7 +182,7 @@ export function getTodoListItems (title, username, token) {
     body: JSON.stringify({
       query: GET_TODO_LIST_ITEMS,
       variables: {
-        title: title,
+        id: id,
         username: username
       }
     })
