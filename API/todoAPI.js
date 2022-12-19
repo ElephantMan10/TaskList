@@ -15,9 +15,9 @@ const GET_TODO_LISTS =
   }`
 
 const GET_TODO_LIST_ITEMS = 
-  `query($title: String!, $username: String) {
+  `query($id: ID!, $username: String) {
     tasks(
-      where: { belongsTo: { title: $title, owner: { username: $username } } }
+      where: { belongsTo: { id: $id, owner: { username: $username } } }
     ) {
       id
       content
@@ -44,8 +44,8 @@ const CREATE_TODO_LIST =
   }`
 
 const DELETE_TODO_LIST =
-  `mutation($title: String!, $username: String!) {
-    deleteTaskLists(where: { title: $title, owner: { username: $username } }) {
+  `mutation($id: ID!, $username: String!) {
+    deleteTaskLists(where: { id: $id, owner: { username: $username } }) {
       nodesDeleted
     }
   }`
@@ -172,7 +172,7 @@ export function getTodoLists (username, token) {
     })
 }
 
-export function getTodoListItems (title, username, token) {
+export function getTodoListItems (id, username, token) {
   return fetch(API_URL, {
     method: 'POST',
     headers: {
@@ -182,7 +182,7 @@ export function getTodoListItems (title, username, token) {
     body: JSON.stringify({
       query: GET_TODO_LIST_ITEMS,
       variables: {
-        title: title,
+        id: id,
         username: username
       }
     })
@@ -230,7 +230,7 @@ export function createTodoList (title, username, token) {
     })
 }
 
-export function deleteTodoList (title, username, token) {
+export function deleteTodoList (id, username, token) {
   return fetch(API_URL, {
     method: 'POST',
     headers: {
@@ -240,7 +240,7 @@ export function deleteTodoList (title, username, token) {
     body: JSON.stringify({
       query: DELETE_TODO_LIST,
       variables: {
-        title: title,
+        id: id,
         username: username
       }
     })

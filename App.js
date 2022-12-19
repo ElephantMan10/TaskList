@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler';
 import React, {useState} from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import { TokenContext, UsernameContext } from './Context/Context'

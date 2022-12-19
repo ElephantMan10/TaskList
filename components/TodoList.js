@@ -1,40 +1,82 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { StyleSheet, View, TextInput, Button, Text, FlatList, Switch } from 'react-native';
 
-// import todoData from '../Helpers/todoData';
-import { getTodoList, addTodo, deleteTodo, updateTodo } from '../API/todoAPI';
+import todoData from '../Helpers/todoData';
+import { getTodoList, getTodoListItems, createTodoItem, deleteTodoItem, updateTodoItem } from '../API/todoAPI';
 import TodoItem from './TodoItem';
+import { TokenContext, UsernameContext } from '../Context/Context';
 
-export default function TodoList(props) {
-    const username = props.username;
-    const todoData = getTodoList(username);
-    const [count, setCount] = useState(todoData.filter((item)=>item.done).length);
-    const [listToDo, setListToDo] = useState(todoData);
+export default function TodoList({ route, navigation }) {
+    const {todoListId} = route.params;
+    const [token, setToken] = useContext(TokenContext);
+    const [username, setUsername] = useContext(UsernameContext);
+    const [listToDo, setListToDo] = useState([]);
+    const [count, setCount] = useState(listToDo.filter((item)=>item.done).length);
     const [newTodoText, setNewTodoText] = useState('');
     const [showDone, setShowDone] = useState(true);
     const [showNotDone, setShowNotDone] = useState(true);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
+
+    console.log("token : " + token);
+    
+    useEffect(() => {
+        getTodoListItems(todoListId, username, token)
+            .then(list => {
+                console.log("getTodoListItems list: ", list);
+                setListToDo(list);
+                setCount(list.filter((item)=>item.done).length);
+                setLoading(false);
+            })
+            .catch(error => {
+                console.log("getTodoListItems get error: ", error);
+                setError(true);
+                setLoading(false);
+            });
+    }, []);
+
+    if (loading) {
+        return <Text>Loading...</Text>;
+    }
+
+    if (error) {
+        return <Text>Error!</Text>;
+    }
 
     const changeItem = (id) => {
-        const newList = listToDo.map(item => {
-            if(item.id == id) {
-                item.done = !item.done;
-            } 
-            return item;
+        updateTodoItem(id, username, token).then(() => {
+            setListToDo(getTodoListItems(todoListId, username, token));
+            setCount(listToDo.filter((item)=>item.done).length);
+        }).catch(error => {
+            console.log("changeItem get error: ", error);
+            setError(true);
+            setLoading(false);
         });
-        setListToDo(newList)
-        setCount(newList.filter((item=>item.done)).length);
+        // setListToDo(getTodoListItems(todoListId, username, token));
+        // setCount(listToDo.filter((item=>item.done)).length);
     };
     const deleteItem = (id) => {
-        const newList = listToDo.filter(item => item.id != id);
-        setListToDo(newList);
-        setCount(newList.filter(item=>item.done).length);
+        deleteTodoItem(id, username, token).then(() => {
+            setListToDo(getTodoListItems(todoListId, username, token));
+            setCount(listToDo.filter(item=>item.done).length);
+        }).catch(error => {
+            console.log("deleteItem get error: ", error);
+            setError(true);
+            setLoading(false);
+        });
+        // setListToDo(getTodoListItems(todoListId, username, token));
+        // setCount(listToDo.filter(item=>item.done).length);
     };
     const addItem = () => {
-        //get max id from tab item
-        const maxId = Math.max(...listToDo.map(item => item.id));
-        const newList = [...listToDo, {id: maxId+1, content: newTodoText, done: false}];
-        setListToDo(newList);
-        setNewTodoText('');
+        createTodoItem(newTodoText, username, token).then(() => {
+            setListToDo(getTodoListItems(todoListId, username, token));
+            setNewTodoText('');
+            setCount(listToDo.filter(item=>item.done).length);
+        }).catch(error => {
+            console.log("addItem get error: ", error);
+            setError(true);
+            setLoading(false);
+        });
     };
     const allDone = () => {
         const newList = listToDo.map(item => {
@@ -69,6 +111,7 @@ export default function TodoList(props) {
             <FlatList
                 style={styles.list}
                 data={listToDo.filter((item) => (item.done && showDone) || (!item.done && showNotDone))}
+                // data={listToDo}
                 renderItem={({item}) => <TodoItem item={item} changeItem={changeItem} deleteItem={deleteItem} allDone={allDone} allNotDone={allNotDone}/>} />
             <Button
                 title={showDone ? 'Masquer les tâches terminées' : 'Afficher les tâches terminées'}

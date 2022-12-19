@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { Text, TextInput, Button, View, StyleSheet, ActivityIndicator } from 'react-native'
 
 import { signUp } from '../API/todoAPI'
@@ -80,6 +80,7 @@ export default function SignUp() {
                                         <Button
                                             onPress={() => getSignedUp(setToken, setUsername)}
                                             title='Sign Up'
+                                            color='green'
                                         />
                                         {error ? (
                                             <Text style={styles.text_error}>{error}</Text>
