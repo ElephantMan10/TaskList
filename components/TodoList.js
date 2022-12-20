@@ -1,10 +1,10 @@
 import React, { useState, useContext, useEffect } from "react";
-import { StyleSheet, View, TextInput, Button, Text, FlatList, Switch } from 'react-native';
+import { StyleSheet, View, TextInput, Button, Text, FlatList, ScrollView } from 'react-native';
 
-import todoData from '../Helpers/todoData';
-import { getTodoList, getTodoListItems, createTodoItem, deleteTodoItem, updateTodoItem } from '../API/todoAPI';
+import { getTodoListItems, createTodoItem, deleteTodoItem, updateTodoItem } from '../API/todoAPI';
 import TodoItem from './TodoItem';
 import { TokenContext, UsernameContext } from '../Context/Context';
+import { ProgressBar } from "react-native-web";
 
 export default function TodoList({ route, navigation }) {
 
@@ -19,12 +19,9 @@ export default function TodoList({ route, navigation }) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
 
-    console.log("token : " + token);
-    
     useEffect(() => {
         getTodoListItems(todoListId, username, token)
             .then(list => {
-                console.log("getTodoListItems list: ", list);
                 setListToDo(list);
                 setCount(list.filter((item)=>item.done).length);
                 setLoading(false);
@@ -37,7 +34,12 @@ export default function TodoList({ route, navigation }) {
     }, []);
 
     if (loading) {
-        return <Text>Loading...</Text>;
+        return (
+            <>
+                <ProgressBar indeterminate trackColor="#D1E3F6" />
+                <Text>Loading...</Text>
+            </>
+        );
     }
 
     if (error) {
@@ -108,10 +110,12 @@ export default function TodoList({ route, navigation }) {
 
     return (
         <View style={styles.content}>
+            <ProgressBar progress={count/listToDo.length} trackColor='#D1E3F6' style={styles.progressBar} />
+            <Text style={styles.title}>Tasks list : {todoListTitle}</Text>
             <TextInput
                 style={styles.text_input}
                 onChangeText={setNewTodoText}
-                placeholder='saisir ici un nouvel item'
+                placeholder='Type a new item here'
                 onSubmitEditing={addItem}
                 value={newTodoText}
             />
@@ -119,36 +123,43 @@ export default function TodoList({ route, navigation }) {
                 title='Ajouter'
                 onPress={addItem}
             />
-            <Text style={styles.text}>Nombre de tâches déjà effectuées : {count}</Text>
-            <FlatList
-                style={styles.list}
-                data={listToDo.filter((item) => (item.done && showDone) || (!item.done && showNotDone))}
-                // data={listToDo}
-                renderItem={({item}) => <TodoItem item={item} changeItem={changeItem} deleteItem={deleteItem} allDone={allDone} allNotDone={allNotDone}/>} />
+            <Text style={styles.text}>Tasks already done : {count}</Text>
+            <ScrollView
+                style={styles.scrollview}
+                contentContainerStyle={styles.scrollview_content}
+                showsVerticalScrollIndicator={true}
+                scrollEnabled={true}
+            >
+                <FlatList
+                    style={styles.list}
+                    data={listToDo.filter((item) => (item.done && showDone) || (!item.done && showNotDone))}
+                    // data={listToDo}
+                    renderItem={({item}) => <TodoItem item={item} changeItem={changeItem} deleteItem={deleteItem} allDone={allDone} allNotDone={allNotDone}/>} />
+            </ScrollView>
             <Button
-                title={showDone ? 'Masquer les tâches terminées' : 'Afficher les tâches terminées'}
+                title={showDone ? 'Hide all done tasks' : 'Show all done tasks'}
                 onPress={() => setShowDone(!showDone)}
                 color={showDone ? 'green' : 'red'}
             />
             <View style={styles.space} />
             <Button
-                title={showNotDone? 'Masquer les items non terminés' : 'Afficher les items non terminés'}
+                title={showNotDone? 'Hide all undone tasks' : 'Show all undone tasks'}
                 onPress={() => setShowNotDone(!showNotDone)}
                 color={showNotDone ? 'green' : 'red'}
             />
             <View style={styles.space} />
             <Button
-                title='Tout afficher'
+                title='Show all tasks'
                 onPress={() => {setShowDone(true); setShowNotDone(true);}}
             />
             <View style={styles.space} />
             <Button
-                title='Tout marquer comme terminé'
+                title='Mark all as done'
                 onPress={allDone}
             />
             <View style={styles.space} />
             <Button
-                title='Tout marquer comme non terminé'
+                title='Mark all as undone'
                 onPress={allNotDone}
             />
             <View style={styles.space} />
@@ -165,7 +176,12 @@ const styles = StyleSheet.create({
         marginTop: 50,
     },
     content: {
-        // flexDirection: 'row',
+        alignItems: 'center',
+    },
+    title: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        margin: 10,
     },
     text: {
         margin: 10,
@@ -184,5 +200,17 @@ const styles = StyleSheet.create({
     space: {
         width: 10,
         height: 20,
+    },
+    scrollview: {
+        height: 400,
+    },
+    scrollview_content: {
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    progressBar: {
+        height: 20,
+        width: 300,
+        margin: 5,
     },
   });
