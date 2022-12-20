@@ -3,8 +3,13 @@ import React, { useEffect, useState } from "react";
 
 export default function TodoItem(props){
     const [done, setdone] = useState(props.item.done);
-    const toggleSwitch = () => {props.changeItem(props.item.id) ; setdone(!done);};
-    const deleteItem = () => {props.deleteItem(props.item.id);};
+    const toggleSwitch = () => {
+        props.changeItem(props.item.id); 
+        setdone(!done);
+    };
+    const deleteItem = () => {
+        props.deleteItem(props.item.id);
+    };
     useEffect(() => {
         setdone(props.item.done);
     }
