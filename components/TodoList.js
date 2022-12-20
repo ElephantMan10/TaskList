@@ -7,7 +7,8 @@ import TodoItem from './TodoItem';
 import { TokenContext, UsernameContext } from '../Context/Context';
 
 export default function TodoList({ route, navigation }) {
-    const {todoListId} = route.params;
+
+    const {todoListId, todoListTitle} = route.params;
     const [token, setToken] = useContext(TokenContext);
     const [username, setUsername] = useContext(UsernameContext);
     const [listToDo, setListToDo] = useState([]);
@@ -44,56 +45,67 @@ export default function TodoList({ route, navigation }) {
     }
 
     const changeItem = (id) => {
-        updateTodoItem(id, username, token).then(() => {
-            setListToDo(getTodoListItems(todoListId, username, token));
-            setCount(listToDo.filter((item)=>item.done).length);
-        }).catch(error => {
+        const changedB = (!(((listToDo.find(item => item.id === id))).done));
+        updateTodoItem(id, changedB, token).then(() => {
+                const newList = listToDo.map((item) => {
+                    if(item.id === id){
+                        item.done = !item.done;
+                    }
+                    return item;
+                });
+                setListToDo(newList);
+                setCount(newList.filter((item)=>item.done).length);
+            }).catch(error => {
             console.log("changeItem get error: ", error);
             setError(true);
             setLoading(false);
         });
-        // setListToDo(getTodoListItems(todoListId, username, token));
-        // setCount(listToDo.filter((item=>item.done)).length);
     };
+
     const deleteItem = (id) => {
-        deleteTodoItem(id, username, token).then(() => {
-            setListToDo(getTodoListItems(todoListId, username, token));
-            setCount(listToDo.filter(item=>item.done).length);
+        deleteTodoItem(id, token).then(() => {
+            const newList = listToDo.filter((item) =>item.id!==id);
+            setListToDo(newList);
+            setCount(newList.filter((item) => item.done).length);
         }).catch(error => {
             console.log("deleteItem get error: ", error);
             setError(true);
             setLoading(false);
         });
-        // setListToDo(getTodoListItems(todoListId, username, token));
-        // setCount(listToDo.filter(item=>item.done).length);
     };
+
     const addItem = () => {
-        createTodoItem(newTodoText, username, token).then(() => {
-            setListToDo(getTodoListItems(todoListId, username, token));
+        createTodoItem(todoListTitle, username, newTodoText,token).then(item => {
+            const newList = [...listToDo, item[0]];
             setNewTodoText('');
-            setCount(listToDo.filter(item=>item.done).length);
+            setListToDo(newList);
         }).catch(error => {
             console.log("addItem get error: ", error);
             setError(true);
             setLoading(false);
         });
     };
+
     const allDone = () => {
-        const newList = listToDo.map(item => {
+        const newList = listToDo.map((item) => {
+            updateTodoItem(item.id, true, token);
             item.done = true;
             return item;
-        });
+        });   
         setListToDo(newList);
         setCount(newList.filter(item=>item.done).length);
     };
+
     const allNotDone = () => {
-        const newList = listToDo.map(item => {
+        const newList = listToDo.map((item) => {
+            updateTodoItem(item.id, false, token);
             item.done = false;
             return item;
-        });
+        });   
         setListToDo(newList);
-        setCount(newList.filter(item=>item.done).length);
+        setCount(0);
     };
+
     return (
         <View style={styles.content}>
             <TextInput

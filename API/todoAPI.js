@@ -88,7 +88,7 @@ const UPDATE_TODO_ITEM =
   }`
 
 
-export function signIn (username, password) {
+export function signIn(username, password) {
   return fetch(API_URL, {
     method: 'POST',
     headers: {
@@ -116,7 +116,7 @@ export function signIn (username, password) {
     })
 }
 
-export function signUp (username, password) {
+export function signUp(username, password) {
   return fetch(API_URL, {
     method: 'POST',
     headers: {
@@ -144,7 +144,7 @@ export function signUp (username, password) {
     })
 }
 
-export function getTodoLists (username, token) {
+export function getTodoLists(username, token) {
   return fetch(API_URL, {
     method: 'POST',
     headers: {
@@ -172,7 +172,7 @@ export function getTodoLists (username, token) {
     })
 }
 
-export function getTodoListItems (id, username, token) {
+export function getTodoListItems(id, username, token) {
   return fetch(API_URL, {
     method: 'POST',
     headers: {
@@ -201,7 +201,7 @@ export function getTodoListItems (id, username, token) {
     })
 }
 
-export function createTodoList (title, username, token) {
+export function createTodoList(title, username, token) {
   return fetch(API_URL, {
     method: 'POST',
     headers: {
@@ -230,7 +230,7 @@ export function createTodoList (title, username, token) {
     })
 }
 
-export function deleteTodoList (id, username, token) {
+export function deleteTodoList(id, username, token) {
   return fetch(API_URL, {
     method: 'POST',
     headers: {
@@ -259,7 +259,7 @@ export function deleteTodoList (id, username, token) {
     })
 }
 
-export function createTodoItem (title, username, content, token) {
+export function createTodoItem(title, username, content, token) {
   return fetch(API_URL, {
     method: 'POST',
     headers: {
@@ -289,7 +289,7 @@ export function createTodoItem (title, username, content, token) {
     })
 }
 
-export function deleteTodoItem (id, token) {
+export function deleteTodoItem(id, token) {
   return fetch(API_URL, {
     method: 'POST',
     headers: {
@@ -317,7 +317,7 @@ export function deleteTodoItem (id, token) {
     })
 }
 
-export function updateTodoItem (id, done, token) {
+export function updateTodoItem(id, done, token) {
   return fetch(API_URL, {
     method: 'POST',
     headers: {
