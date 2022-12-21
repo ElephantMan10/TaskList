@@ -51,12 +51,12 @@ const DELETE_TODO_LIST =
   }`
 
 const CREATE_TODO_ITEM =
-  `mutation($title: String!, $username: String!, $content: String!) {
+  `mutation($id: ID!, $content: String!) {
     createTasks(
       input: {
         content: $content
         belongsTo: {
-          connect: { where: { title: $title, owner: { username: $username } } }
+          connect: { where: { id: $id } }
         }
         done: false
       }
@@ -259,7 +259,7 @@ export function deleteTodoList(id, username, token) {
     })
 }
 
-export function createTodoItem(title, username, content, token) {
+export function createTodoItem(id, content, token) {
   return fetch(API_URL, {
     method: 'POST',
     headers: {
@@ -269,8 +269,7 @@ export function createTodoItem(title, username, content, token) {
     body: JSON.stringify({
       query: CREATE_TODO_ITEM,
       variables: {
-        title: title,
-        username: username,
+        id: id,
         content: content
       }
     })

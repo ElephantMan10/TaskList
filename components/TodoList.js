@@ -77,7 +77,7 @@ export default function TodoList({ route, navigation }) {
     };
 
     const addItem = () => {
-        createTodoItem(todoListTitle, username, newTodoText,token).then(item => {
+        createTodoItem(todoListId, newTodoText,token).then(item => {
             const newList = [...listToDo, item[0]];
             setNewTodoText('');
             setListToDo(newList);
@@ -110,7 +110,7 @@ export default function TodoList({ route, navigation }) {
 
     return (
         <View style={styles.content}>
-            <Text style={styles.title}>Tasks list : {todoListTitle}</Text>
+            <Text style={styles.title}>Todo list : {todoListTitle}</Text>
             <TextInput
                 style={styles.text_input}
                 onChangeText={setNewTodoText}
