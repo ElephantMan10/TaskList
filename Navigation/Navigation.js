@@ -19,8 +19,8 @@ const Stack = createStackNavigator()
 function TodoNavigation () {
     return (
        <Stack.Navigator>
-            <Stack.Screen name='Todo Lists' component={TodoListsScreen} />
-            <Stack.Screen name='Todo List' component={TodoListScreen} />
+            <Stack.Screen name='TaskLists' component={TodoListsScreen} option={{title:"List of task lists"}} />
+            <Stack.Screen name='Todo List' component={TodoListScreen} options={{title:"Task list"}} />
        </Stack.Navigator> 
     )
 }
@@ -37,7 +37,6 @@ export default function Navigation () {
                             screenOptions={({route}) => ({
                                 tabBarActiveTintColor: 'blue',
                                 tabBarInactiveTintColor: 'gray',
-                                //Tab bar styles can be added here
                                 tabBarStyle:{paddingVertical: 5,borderTopLeftRadius:15,borderTopRightRadius:15,backgroundColor:'white',position:'absolute',height:50},
                                 tabBarLabelStyle:{paddingBottom:3},
                                 tabBarIcon: ({focused, color, size}) => {
@@ -58,7 +57,6 @@ export default function Navigation () {
                             screenOptions={({route}) => ({
                                 tabBarActiveTintColor: 'blue',
                                 tabBarInactiveTintColor: 'gray',
-                                //Tab bar styles can be added here
                                 tabBarStyle:{paddingVertical: 5,borderTopLeftRadius:15,borderTopRightRadius:15,backgroundColor:'white',position:'absolute',height:50},
                                 tabBarLabelStyle:{paddingBottom:3
                                 },

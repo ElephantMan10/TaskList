@@ -1,9 +1,10 @@
 import React, {useState, useEffect, useContext} from "react";
-import { StyleSheet, View, Text, Button } from "react-native";
+import { StyleSheet, View, Text, Button, ScrollView } from "react-native";
 import { TodoList } from "./TodoList";
 import { getTodoLists, createTodoList, deleteTodoList } from '../API/todoAPI'
 import { TokenContext, UsernameContext } from '../Context/Context'
 import { FlatList, TextInput } from "react-native-gesture-handler";
+import { ProgressBar } from "react-native-web";
 
 export default function TodoLists ({navigation}) {
     const [loading, setLoading] = useState(true);
@@ -51,7 +52,12 @@ export default function TodoLists ({navigation}) {
     }
 
     if (loading) {
-        return <Text>Loading...</Text>;
+        return (
+            <>
+                <ProgressBar indeterminate trackColor="#D1E3F6" />
+                <Text>Loading...</Text>
+            </>
+        );
     }
 
     if (error) {
@@ -61,21 +67,25 @@ export default function TodoLists ({navigation}) {
     return (
         <View style={{flex:1}}>
             <Text style={styles.title}>Todo Lists</Text>
-            <FlatList
-                data={todoLists}
-                style={styles.todoList}
-                renderItem={({item}) => (
-                    // <Button title={item.title} onPress={() => navigation.navigate('TodoList', {todoListId: item.id})} />
-                    <>
-                        <Text style={styles.todoList}>{item.title}</Text>   
-                        <View style={{flexDirection:'row', justifyContent:'center'}}>
-                            <Button title="Open" onPress={() => navigation.navigate('Todo List', {todoListId: item.id, todoListTitle: item.title})} />
-                            <Button title="Delete" onPress={() => delTodoList(item.id)} />
-                        </View>
-                    </>
-                )}
-                keyExtractor={item => item.id}
-            />
+            <ScrollView
+                style={styles.scrollView}
+                contentContainerStyle={{alignItems: 'center'}}
+            >
+                <FlatList
+                    data={todoLists}
+                    style={styles.todoList}
+                    renderItem={({item}) => (
+                        <>
+                            <Text style={styles.todoList}>{item.title}</Text>   
+                            <View style={{flexDirection:'row', justifyContent:'center'}}>
+                                <Button title="Open" onPress={() => navigation.navigate('Todo List', {todoListId: item.id, todoListTitle: item.title})} />
+                                <Button title="Delete" onPress={() => delTodoList(item.id)} />
+                            </View>
+                        </>
+                    )}
+                    keyExtractor={item => item.id}
+                />
+            </ScrollView>
             <TextInput 
                 style={styles.input}
                 placeholder="Todo List Name"
@@ -87,8 +97,6 @@ export default function TodoLists ({navigation}) {
         </View>
     );
 }
-
-//modifier le code pour faire agir un Navigation et ainsi naviguer entre la liste des todoLists et la liste des todoItems
 
 const styles = StyleSheet.create({
     view: {
@@ -117,5 +125,8 @@ const styles = StyleSheet.create({
     },
     addButton: {
         marginTop: 20,
-    }
+    },
+    scrollView: {
+        marginHorizontal: 20,
+    },
 })
