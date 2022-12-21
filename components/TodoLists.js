@@ -75,7 +75,6 @@ export default function TodoLists ({navigation}) {
                     data={todoLists}
                     style={styles.todoList}
                     renderItem={({item}) => (
-                        // <Button title={item.title} onPress={() => navigation.navigate('TodoList', {todoListId: item.id})} />
                         <>
                             <Text style={styles.todoList}>{item.title}</Text>   
                             <View style={{flexDirection:'row', justifyContent:'center'}}>
@@ -98,8 +97,6 @@ export default function TodoLists ({navigation}) {
         </View>
     );
 }
-
-//modifier le code pour faire agir un Navigation et ainsi naviguer entre la liste des todoLists et la liste des todoItems
 
 const styles = StyleSheet.create({
     view: {

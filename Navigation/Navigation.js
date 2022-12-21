@@ -37,7 +37,6 @@ export default function Navigation () {
                             screenOptions={({route}) => ({
                                 tabBarActiveTintColor: 'blue',
                                 tabBarInactiveTintColor: 'gray',
-                                //Tab bar styles can be added here
                                 tabBarStyle:{paddingVertical: 5,borderTopLeftRadius:15,borderTopRightRadius:15,backgroundColor:'white',position:'absolute',height:50},
                                 tabBarLabelStyle:{paddingBottom:3},
                                 tabBarIcon: ({focused, color, size}) => {
@@ -58,7 +57,6 @@ export default function Navigation () {
                             screenOptions={({route}) => ({
                                 tabBarActiveTintColor: 'blue',
                                 tabBarInactiveTintColor: 'gray',
-                                //Tab bar styles can be added here
                                 tabBarStyle:{paddingVertical: 5,borderTopLeftRadius:15,borderTopRightRadius:15,backgroundColor:'white',position:'absolute',height:50},
                                 tabBarLabelStyle:{paddingBottom:3
                                 },

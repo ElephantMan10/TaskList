@@ -119,7 +119,7 @@ export default function TodoList({ route, navigation }) {
                 value={newTodoText}
             />
             <Button
-                title='Ajouter'
+                title='Add'
                 onPress={addItem}
             />
             <Text style={styles.text}>Tasks already done : {count}</Text>
