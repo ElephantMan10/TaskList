@@ -110,7 +110,6 @@ export default function TodoList({ route, navigation }) {
 
     return (
         <View style={styles.content}>
-            <ProgressBar progress={count/listToDo.length} trackColor='#D1E3F6' style={styles.progressBar} />
             <Text style={styles.title}>Tasks list : {todoListTitle}</Text>
             <TextInput
                 style={styles.text_input}
@@ -136,6 +135,7 @@ export default function TodoList({ route, navigation }) {
                     // data={listToDo}
                     renderItem={({item}) => <TodoItem item={item} changeItem={changeItem} deleteItem={deleteItem} allDone={allDone} allNotDone={allNotDone}/>} />
             </ScrollView>
+            <ProgressBar progress={count/listToDo.length} trackColor='#D1E3F6' style={styles.progressBar} />
             <Button
                 title={showDone ? 'Hide all done tasks' : 'Show all done tasks'}
                 onPress={() => setShowDone(!showDone)}
@@ -162,7 +162,7 @@ export default function TodoList({ route, navigation }) {
                 title='Mark all as undone'
                 onPress={allNotDone}
             />
-            <View style={styles.space} />
+            <View style={styles.endspace} />
         </View>
     )
 }
@@ -177,6 +177,7 @@ const styles = StyleSheet.create({
     },
     content: {
         alignItems: 'center',
+        flex:1,
     },
     title: {
         fontSize: 20,
@@ -202,7 +203,7 @@ const styles = StyleSheet.create({
         height: 20,
     },
     scrollview: {
-        height: 400,
+        flex: 1,
     },
     scrollview_content: {
         alignItems: 'center',
@@ -213,4 +214,7 @@ const styles = StyleSheet.create({
         width: 300,
         margin: 5,
     },
+    endspace: {
+        height: 50,
+    }
   });

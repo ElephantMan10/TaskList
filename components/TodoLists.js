@@ -68,7 +68,7 @@ export default function TodoLists ({navigation}) {
         <View style={{flex:1}}>
             <Text style={styles.title}>Todo Lists</Text>
             <ScrollView
-                style={styles.todoLists}
+                style={styles.scrollView}
                 contentContainerStyle={{alignItems: 'center'}}
             >
                 <FlatList
