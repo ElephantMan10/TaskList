@@ -87,6 +87,47 @@ const UPDATE_TODO_ITEM =
     }
   }`
 
+const GET_USERS =
+  `query {
+    users {
+  	  id
+      username
+      password
+      roles
+    }
+  }`
+
+const DELETE_USER =
+  `mutation($username: String!) {
+    deleteUsers(where: { username: $username }) {
+      nodesDeleted
+    }
+  }`
+
+const UPDATE_PASSWORD =
+  `mutation($username: String!, $password: String!) {
+    updateUsers(where: { username: $username }, update: { password: $password }) {
+      users {
+        id
+        username
+        password
+      }
+    }
+  }`
+
+const CREATE_USER =
+  `mutation($username: String!, $password: String!, $role: [String!]!) {
+    createUsers(
+      input: { username: $username, password: $password, roles: $role }
+    ) {
+      users {
+        id
+        username
+        password
+        roles
+      }
+    }
+  }`
 
 export function signIn(username, password) {
   return fetch(API_URL, {
@@ -339,6 +380,114 @@ export function updateTodoItem(id, done, token) {
         throw jsonResponse.errors[0]
       }
       return jsonResponse.data.updateTasks.tasks
+    })
+    .catch(error => {
+      throw error
+    })
+}
+
+export function getUsers() {
+  return fetch(API_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      query: GET_USERS
+    })
+  })
+    .then(response => {
+      return response.json()
+    })
+    .then(jsonResponse => {
+      if (jsonResponse.errors != null) {
+        throw jsonResponse.errors[0]
+      }
+      return jsonResponse.data.users
+    })
+    .catch(error => {
+      throw error
+    })
+}
+
+export function deleteUser(username) {
+  return fetch(API_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      query: DELETE_USER,
+      variables: {
+        username: username
+      }
+    })
+  })
+    .then(response => {
+      return response.json()
+    })
+    .then(jsonResponse => {
+      if (jsonResponse.errors != null) {
+        throw jsonResponse.errors[0]
+      }
+      return jsonResponse.data.deleteUsers.nodesDeleted
+    })
+    .catch(error => {
+      throw error
+    })
+}
+
+export function changePassword(username, password) {
+  return fetch(API_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      query: UPDATE_PASSWORD,
+      variables: {
+        username: username,
+        password: password
+      }
+    })
+  })
+    .then(response => {
+      return response.json()
+    })
+    .then(jsonResponse => {
+      if (jsonResponse.errors != null) {
+        throw jsonResponse.errors[0]
+      }
+      return jsonResponse.data.updateUsers.users
+    })
+    .catch(error => {
+      throw error
+    })
+}
+
+export function createUser(username, password, role) {
+  return fetch(API_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      query: CREATE_USER,
+      variables: {
+        username: username,
+        password: password,
+        role: role
+      }
+    })
+  })
+    .then(response => {
+      return response.json()
+    })
+    .then(jsonResponse => {
+      if (jsonResponse.errors != null) {
+        throw jsonResponse.errors[0]
+      }
+      return jsonResponse.data.createUsers.users
     })
     .catch(error => {
       throw error
