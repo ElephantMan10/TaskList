@@ -82,14 +82,19 @@ export default function ManageUsers ({navigation}) {
         );
     }
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
             <Text style={styles.title}>Manage Users</Text>
             <FlatList
+                style={styles.list}
                 data={users}
                 renderItem={({item}) => (
                     <View style={styles.listItem}>
                         {/* show users and their password */}
-                        <Text style={styles.listItemText}>Username: {item.username} Password: {item.password}   Roles: {item.roles}   </Text>
+                        <View style={styles.listItemText}>
+                            <Text>Username: {item.username}</Text>
+                            <Text>Password: {item.password}</Text>
+                            <Text>Roles: {item.roles}</Text>
+                        </View>
                         <Button title="Delete" 
                             onPress={() => {
                                 delUser(item.username);
@@ -125,7 +130,7 @@ export default function ManageUsers ({navigation}) {
                 <Button title="Add Admin" onPress={() => addUser(true)} />
             </View>
             <View style={ {height: 1000}}/>
-        </View>
+        </ScrollView>
     );
 }
 
@@ -141,6 +146,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     listItem: {
+        flex:1,
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
@@ -157,5 +163,8 @@ const styles = StyleSheet.create({
         width: "80%",
         margin: 12,
         borderWidth: 1,
+    },
+    list: {
+        width: "100%",
     },
 });
