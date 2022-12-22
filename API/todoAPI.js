@@ -87,6 +87,21 @@ const UPDATE_TODO_ITEM =
     }
   }`
 
+const GET_USERS =
+  `query {
+    users {
+  	  id
+      username
+      password
+    }
+  }`
+
+const DELETE_USER =
+  `mutation($username: String!) {
+    deleteUsers(where: { username: $username }) {
+      nodesDeleted
+    }
+  }`
 
 export function signIn(username, password) {
   return fetch(API_URL, {
@@ -339,6 +354,57 @@ export function updateTodoItem(id, done, token) {
         throw jsonResponse.errors[0]
       }
       return jsonResponse.data.updateTasks.tasks
+    })
+    .catch(error => {
+      throw error
+    })
+}
+
+export function getUsers() {
+  return fetch(API_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      query: GET_USERS
+    })
+  })
+    .then(response => {
+      return response.json()
+    })
+    .then(jsonResponse => {
+      if (jsonResponse.errors != null) {
+        throw jsonResponse.errors[0]
+      }
+      return jsonResponse.data.users
+    })
+    .catch(error => {
+      throw error
+    })
+}
+
+export function deleteUser(username) {
+  return fetch(API_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      query: DELETE_USER,
+      variables: {
+        username: username
+      }
+    })
+  })
+    .then(response => {
+      return response.json()
+    })
+    .then(jsonResponse => {
+      if (jsonResponse.errors != null) {
+        throw jsonResponse.errors[0]
+      }
+      return jsonResponse.data.deleteUsers.nodesDeleted
     })
     .catch(error => {
       throw error
