@@ -82,7 +82,7 @@ export default function ManageUsers ({navigation}) {
         );
     }
     return (
-        <ScrollView style={styles.container}>
+        <ScrollView style={styles.container} contentContainerStyle={styles.contentcontainer}>
             <Text style={styles.title}>Manage Users</Text>
             <FlatList
                 style={styles.list}
@@ -137,6 +137,8 @@ export default function ManageUsers ({navigation}) {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: "#fff",
+    },
+    contentcontainer: {
         alignItems: "center",
         justifyContent: "center",
     },
