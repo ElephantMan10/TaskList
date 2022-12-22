@@ -19,7 +19,7 @@ const Stack = createStackNavigator()
 function TodoNavigation () {
     return (
        <Stack.Navigator>
-            <Stack.Screen name='TaskLists' component={TodoListsScreen} option={{title:"List of task lists"}} />
+            <Stack.Screen name='Todo lists' component={TodoListsScreen} option={{title:"List of task lists"}} />
             <Stack.Screen name='Todo List' component={TodoListScreen} options={{title:"Task list"}} />
        </Stack.Navigator> 
     )
