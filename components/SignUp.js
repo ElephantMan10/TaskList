@@ -6,13 +6,18 @@ import { signUp } from '../API/todoAPI'
 import { TokenContext } from '../Context/Context'
 import { UsernameContext } from '../Context/Context'
 
+/**
+ * This component displays the sign up form.
+ */
 export default function SignUp() {
-    const [login, setLogin] = useState('')
-    const [password, setPassword] = useState('')
-    const [copyPassword, setCopyPassword] = useState('')
-    const [error, setError] = useState('')
-    const [visible, setVisible] = useState(true)
 
+    const [login, setLogin] = useState('') // new login state
+    const [password, setPassword] = useState('') // new password state
+    const [copyPassword, setCopyPassword] = useState('') // new password copy state
+    const [error, setError] = useState('') 
+    const [visible, setVisible] = useState(true) // visibility state
+
+    // Sign up the user
     const getSignedUp = (setToken, setUsername) => {
         setError('')
         if (login == '' || password == '' || copyPassword == '') return
@@ -33,6 +38,7 @@ export default function SignUp() {
         setVisible(true)
     }
 
+    // Display the sign up form
     return (
         <TokenContext.Consumer>
             {([token, setToken]) => (

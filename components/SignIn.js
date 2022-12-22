@@ -5,12 +5,17 @@ import { signIn } from '../API/todoAPI'
 
 import { TokenContext, UsernameContext } from '../Context/Context'
 
+/**
+ * This component displays the sign in form.
+ */
 export default function SignIn() {
-    const [login, setLogin] = useState('')
-    const [password, setPassword] = useState('')
-    const [error, setError] = useState('')
-    const [visible, setVisible] = useState(true)
+    
+    const [login, setLogin] = useState('') // login state
+    const [password, setPassword] = useState('') // password state
+    const [error, setError] = useState('') // error state
+    const [visible, setVisible] = useState(true) // visibility state
 
+    // Sign in the user
     const getSignedIn = (setToken, setUsername) => {
         setError('')
         if (login == '' || password == '') return
@@ -26,6 +31,7 @@ export default function SignIn() {
         setVisible(true)
     }
 
+    // Display the sign in form
     return (
         <TokenContext.Consumer>
             {([token, setToken]) => (

@@ -6,28 +6,31 @@ import { TokenContext, UsernameContext } from '../Context/Context'
 import { FlatList, TextInput } from "react-native-gesture-handler";
 import { ProgressBar } from "react-native-web";
 
+/**
+ * This component displays the list of todo lists of the user.
+ */
 export default function TodoLists ({navigation}) {
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(false);
-    const [token, setToken] = useContext(TokenContext);
-    const [username, setUsername] = useContext(UsernameContext);
-    const [todoListName, setTodoListName] = useState("");
-    const [todoLists, setTodoLists] = useState(getTodoLists(username, token));
+    const [loading, setLoading] = useState(true); // Loading state
+    const [error, setError] = useState(false); // Error state
+    const [token, setToken] = useContext(TokenContext); // Token context
+    const [username, setUsername] = useContext(UsernameContext); // Username context
+    const [todoListName, setTodoListName] = useState(""); // new todo list name
+    const [todoLists, setTodoLists] = useState([]); // Todo lists state
 
-
+    // Get the todo lists of the user
     useEffect(() => {
         getTodoLists(username, token)
             .then(lists => {
                 setTodoLists(lists);
                 setLoading(false);
-            })
-            .catch(error => {
+            }).catch(error => {
                 setError(true);
                 setLoading(false);
             });
     }
     , []);
 
+    // Add a new todo list
     const addTodoList = () => {
         if(todoListName !== "") {
             createTodoList(todoListName, username, token)
@@ -41,6 +44,7 @@ export default function TodoLists ({navigation}) {
         }
     }
 
+    // Delete a todo list
     const delTodoList = (id) => {
         deleteTodoList(id, username, token)
             .then(() => {
@@ -64,6 +68,7 @@ export default function TodoLists ({navigation}) {
         return <Text>Error!</Text>;
     }
 
+    // Display the todo lists
     return (
         <ScrollView style={{flex:1}}>
             <Text style={styles.title}>My lists:</Text>
