@@ -1,20 +1,31 @@
 import { StyleSheet, Switch, Text, View, Image, TouchableOpacity } from 'react-native';
 import React, { useEffect, useState } from "react";
 
+/**
+ * This component displays a todo item.
+ */
 export default function TodoItem(props){
-    const [done, setdone] = useState(props.item.done);
-    const toggleSwitch = () => {
-        props.changeItem(props.item.id); 
-        setdone(!done);
-    };
-    const deleteItem = () => {
-        props.deleteItem(props.item.id);
-    };
+
+    const [done, setdone] = useState(props.item.done); // Done state
+
+    // Load the done state of the item
     useEffect(() => {
         setdone(props.item.done);
     }
     , [props.item.done]);
+
+    // Toggle the done state of the item
+    const toggleSwitch = () => {
+        props.changeItem(props.item.id); 
+        setdone(!done);
+    };
+
+    // Delete the item
+    const deleteItem = () => {
+        props.deleteItem(props.item.id);
+    };
     
+    // Display the item
     return (
         <View style={styles.content}>
             <TouchableOpacity onPress={deleteItem}>

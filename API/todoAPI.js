@@ -1,5 +1,7 @@
 const API_URL = 'http://127.0.0.1:4000'
 
+// ----- GraphQL queries and mutations -----
+
 const SIGN_IN =
   'mutation($username:String!, $password:String!){signIn(username:$username, password:$password)}'
 
@@ -129,6 +131,11 @@ const CREATE_USER =
     }
   }`
 
+// ----- API functions -----
+
+/**
+ * Sign in a user
+ */
 export function signIn(username, password) {
   return fetch(API_URL, {
     method: 'POST',
@@ -157,6 +164,9 @@ export function signIn(username, password) {
     })
 }
 
+/**
+ * Sign up a user
+ */
 export function signUp(username, password) {
   return fetch(API_URL, {
     method: 'POST',
@@ -185,6 +195,9 @@ export function signUp(username, password) {
     })
 }
 
+/**
+ * Get all todo lists of a user
+ */
 export function getTodoLists(username, token) {
   return fetch(API_URL, {
     method: 'POST',
@@ -213,6 +226,9 @@ export function getTodoLists(username, token) {
     })
 }
 
+/**
+ * Get all todo items of a todo list
+ */
 export function getTodoListItems(id, username, token) {
   return fetch(API_URL, {
     method: 'POST',
@@ -242,6 +258,9 @@ export function getTodoListItems(id, username, token) {
     })
 }
 
+/**
+ * Create a todo list
+ */
 export function createTodoList(title, username, token) {
   return fetch(API_URL, {
     method: 'POST',
@@ -271,6 +290,9 @@ export function createTodoList(title, username, token) {
     })
 }
 
+/**
+ * Delete a todo list
+ */
 export function deleteTodoList(id, username, token) {
   return fetch(API_URL, {
     method: 'POST',
@@ -300,6 +322,9 @@ export function deleteTodoList(id, username, token) {
     })
 }
 
+/**
+ * Create a todo item
+ */
 export function createTodoItem(id, content, token) {
   return fetch(API_URL, {
     method: 'POST',
@@ -329,6 +354,9 @@ export function createTodoItem(id, content, token) {
     })
 }
 
+/**
+ * Delete a todo item
+ */
 export function deleteTodoItem(id, token) {
   return fetch(API_URL, {
     method: 'POST',
@@ -357,6 +385,9 @@ export function deleteTodoItem(id, token) {
     })
 }
 
+/**
+ * Udapte a todo item
+ */
 export function updateTodoItem(id, done, token) {
   return fetch(API_URL, {
     method: 'POST',
@@ -386,6 +417,9 @@ export function updateTodoItem(id, done, token) {
     })
 }
 
+/**
+ * Get all users
+ */
 export function getUsers() {
   return fetch(API_URL, {
     method: 'POST',
@@ -410,6 +444,9 @@ export function getUsers() {
     })
 }
 
+/**
+ * Delete a user
+ */
 export function deleteUser(username) {
   return fetch(API_URL, {
     method: 'POST',
@@ -437,6 +474,9 @@ export function deleteUser(username) {
     })
 }
 
+/**
+ * Update a user's password
+ */
 export function changePassword(username, password) {
   return fetch(API_URL, {
     method: 'POST',
@@ -465,6 +505,9 @@ export function changePassword(username, password) {
     })
 }
 
+/**
+ * Create a new user with a given username, password and role
+ */
 export function createUser(username, password, role) {
   return fetch(API_URL, {
     method: 'POST',
