@@ -13,7 +13,7 @@ import SignUpScreen from '../Screen/SignUpScreen'
 import TodoListScreen from '../Screen/TodoListScreen'
 import ManageUsersScreen from '../Screen/ManageUsersScreen'
 
-import { TokenContext } from '../Context/Context'
+import { TokenContext, UsernameContext } from '../Context/Context'
 
 const Stack = createStackNavigator()
 
@@ -32,59 +32,68 @@ export default function Navigation () {
     return (
         <TokenContext.Consumer>
             {([token, setToken]) => (
-                <NavigationContainer>
-                    {token == null ? (
-                        <Tab.Navigator
-                            screenOptions={({route}) => ({
-                                tabBarActiveTintColor: 'blue',
-                                tabBarInactiveTintColor: 'gray',
-                                tabBarStyle:{paddingVertical: 5,borderTopLeftRadius:15,borderTopRightRadius:15,backgroundColor:'white',position:'absolute',height:50},
-                                tabBarLabelStyle:{paddingBottom:3},
-                                tabBarIcon: ({focused, color, size}) => {
-                                    let iconName;
-                                    if (route.name === 'Sign In') {
-                                        iconName = !focused ? 'ios-log-in-outline' : 'ios-log-in-sharp';
-                                    } else if (route.name === 'Sign Up') {
-                                        iconName = !focused ? 'ios-log-in-outline' : 'ios-log-in-sharp';
+                <UsernameContext.Consumer>
+                    {([username, setUsername]) => (
+                        <NavigationContainer>
+                            {token == null ? (
+                                <Tab.Navigator
+                                    screenOptions={({route}) => ({
+                                        tabBarActiveTintColor: 'blue',
+                                        tabBarInactiveTintColor: 'gray',
+                                        tabBarStyle:{paddingVertical: 5,borderTopLeftRadius:15,borderTopRightRadius:15,backgroundColor:'white',position:'absolute',height:50},
+                                        tabBarLabelStyle:{paddingBottom:3},
+                                        tabBarIcon: ({focused, color, size}) => {
+                                            let iconName;
+                                            if (route.name === 'Sign In') {
+                                                iconName = !focused ? 'ios-log-in-outline' : 'ios-log-in-sharp';
+                                            } else if (route.name === 'Sign Up') {
+                                                iconName = !focused ? 'ios-log-in-outline' : 'ios-log-in-sharp';
+                                            }
+                                            return <Ionicons name={iconName} size={size} color={color} />;
+                                        }
+                                    })}>
+                                    <Tab.Screen name='Sign In' component={SignInScreen} />
+                                    <Tab.Screen name='Sign Up' component={SignUpScreen} />
+                                </Tab.Navigator>
+                            ) : (
+                                <Tab.Navigator
+                                    screenOptions={({route}) => ({
+                                        tabBarActiveTintColor: 'blue',
+                                        tabBarInactiveTintColor: 'gray',
+                                        tabBarStyle:{paddingVertical: 5,borderTopLeftRadius:15,borderTopRightRadius:15,backgroundColor:'white',position:'absolute',height:50},
+                                        tabBarLabelStyle:{paddingBottom:3
+                                        },
+                                        tabBarIcon: ({focused, color, size}) => {
+                                            let iconName;
+                                            if (route.name === 'Home') {
+                                                iconName = focused ? 'ios-information-circle-sharp' : 'ios-information-circle-outline';
+                                            } else if (route.name === 'TodoLists') {
+                                                iconName = !focused ? 'ios-checkbox-outline' : 'ios-checkbox-sharp';
+                                            } else if (route.name === 'SignOut') {
+                                                iconName = !focused ? 'ios-log-out-outline' : 'ios-log-out-sharp';
+                                            } else if (route.name === 'ManageUsers') {
+                                                iconName = !focused ? 'ios-people-outline' : 'ios-people-sharp';
+                                            }
+                                            return <Ionicons name={iconName} size={size} color={color} />;
+                                        }
+                                    })}
+                                >
+                                    <Tab.Screen name='Home' component={HomeScreen} />
+                                    <Tab.Screen name='TodoLists' component={TodoNavigation} />
+                                    {username === 'admin' ? (
+                                            <>
+                                                <Tab.Screen name='ManageUsers' component={ManageUsersScreen} />
+                                                <Tab.Screen name='SignOut' component={SignOutScreen} />
+                                            </>
+                                        ) : (
+                                            <Tab.Screen name='SignOut' component={SignOutScreen} />
+                                        )
                                     }
-                                    return <Ionicons name={iconName} size={size} color={color} />;
-                                }
-                            })}>
-                            <Tab.Screen name='Sign In' component={SignInScreen} />
-                            <Tab.Screen name='Sign Up' component={SignUpScreen} />
-                        </Tab.Navigator>
-                    ) : (
-                        <Tab.Navigator
-                            screenOptions={({route}) => ({
-                                tabBarActiveTintColor: 'blue',
-                                tabBarInactiveTintColor: 'gray',
-                                tabBarStyle:{paddingVertical: 5,borderTopLeftRadius:15,borderTopRightRadius:15,backgroundColor:'white',position:'absolute',height:50},
-                                tabBarLabelStyle:{paddingBottom:3
-                                },
-                                tabBarIcon: ({focused, color, size}) => {
-                                    let iconName;
-                                    if (route.name === 'Home') {
-                                        iconName = focused ? 'ios-information-circle-sharp' : 'ios-information-circle-outline';
-                                    } else if (route.name === 'TodoLists') {
-                                        iconName = !focused ? 'ios-checkbox-outline' : 'ios-checkbox-sharp';
-                                    } else if (route.name === 'SignOut') {
-                                        iconName = !focused ? 'ios-log-out-outline' : 'ios-log-out-sharp';
-                                    }
-                                    return <Ionicons name={iconName} size={size} color={color} />;
-                                }
-                            })}
-                        >
-                            <Tab.Screen name='Home' component={HomeScreen} />
-                            <Tab.Screen name='TodoLists' component={TodoNavigation} />
-                            
-                            {
-                                ///<Tab.Screen name='ManageUsers' component={ManageUsersScreen} />
-
-                            }
-                            <Tab.Screen name='SignOut' component={SignOutScreen} />
-                        </Tab.Navigator>
+                                </Tab.Navigator>
+                            )}
+                        </NavigationContainer>
                     )}
-                </NavigationContainer>
+                </UsernameContext.Consumer>
             )}
         </TokenContext.Consumer>
     )
