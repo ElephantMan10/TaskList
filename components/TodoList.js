@@ -109,7 +109,9 @@ export default function TodoList({ route, navigation }) {
     };
 
     return (
-        <View style={styles.content}>
+        <ScrollView style={styles.content} 
+            contentContainerStyle={styles.content_container}
+        >
             <Text style={styles.title}>Todo list : {todoListTitle}</Text>
             <TextInput
                 style={styles.text_input}
@@ -123,18 +125,11 @@ export default function TodoList({ route, navigation }) {
                 onPress={addItem}
             />
             <Text style={styles.text}>Tasks already done : {count}</Text>
-            <ScrollView
-                style={styles.scrollview}
-                contentContainerStyle={styles.scrollview_content}
-                showsVerticalScrollIndicator={true}
-                scrollEnabled={true}
-            >
-                <FlatList
-                    style={styles.list}
-                    data={listToDo.filter((item) => (item.done && showDone) || (!item.done && showNotDone))}
-                    // data={listToDo}
-                    renderItem={({item}) => <TodoItem item={item} changeItem={changeItem} deleteItem={deleteItem} allDone={allDone} allNotDone={allNotDone}/>} />
-            </ScrollView>
+            <FlatList
+                style={styles.list}
+                data={listToDo.filter((item) => (item.done && showDone) || (!item.done && showNotDone))}
+                // data={listToDo}
+                renderItem={({item}) => <TodoItem item={item} changeItem={changeItem} deleteItem={deleteItem} allDone={allDone} allNotDone={allNotDone}/>} />
             <ProgressBar progress={count/listToDo.length} trackColor='#D1E3F6' style={styles.progressBar} />
             <Button
                 title={showDone ? 'Hide all done tasks' : 'Show all done tasks'}
@@ -163,7 +158,7 @@ export default function TodoList({ route, navigation }) {
                 onPress={allNotDone}
             />
             <View style={styles.endspace} />
-        </View>
+        </ScrollView>
     )
 }
 
@@ -176,8 +171,10 @@ const styles = StyleSheet.create({
         marginTop: 50,
     },
     content: {
-        alignItems: 'center',
         flex:1,
+    },
+    content_container: {
+        alignItems: 'center',
     },
     title: {
         fontSize: 20,
