@@ -65,27 +65,22 @@ export default function TodoLists ({navigation}) {
     }
 
     return (
-        <View style={{flex:1}}>
+        <ScrollView style={{flex:1}}>
             <Text style={styles.title}>My lists:</Text>
-            <ScrollView
-                style={styles.scrollView}
-                contentContainerStyle={{alignItems: 'center'}}
-            >
-                <FlatList
-                    data={todoLists}
-                    style={styles.todoList}
-                    renderItem={({item}) => (
-                        <>
-                            <Text style={styles.todoList}>{item.title}</Text>   
-                            <View style={{flexDirection:'row', justifyContent:'center'}}>
-                                <Button title="Open" onPress={() => navigation.navigate('Todo List', {todoListId: item.id, todoListTitle: item.title})} />
-                                <Button title="Delete" onPress={() => delTodoList(item.id)} />
-                            </View>
-                        </>
-                    )}
-                    keyExtractor={item => item.id}
-                />
-            </ScrollView>
+            <FlatList
+                data={todoLists}
+                style={styles.todoList}
+                renderItem={({item}) => (
+                    <>
+                        <Text style={styles.todoList}>{item.title}</Text>   
+                        <View style={{flexDirection:'row', justifyContent:'center'}}>
+                            <Button title="Open" onPress={() => navigation.navigate('Todo List', {todoListId: item.id, todoListTitle: item.title})} />
+                            <Button title="Delete" onPress={() => delTodoList(item.id)} />
+                        </View>
+                    </>
+                )}
+                keyExtractor={item => item.id}
+            />
             <TextInput 
                 style={styles.input}
                 placeholder="Todo List Name"
@@ -94,7 +89,7 @@ export default function TodoLists ({navigation}) {
             />
             <Button title="Add Todo List" onPress={addTodoList} style={styles.addButton} />
             <View style={{margin:25}}> </View>
-        </View>
+        </ScrollView>
     );
 }
 
