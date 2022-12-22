@@ -6,19 +6,24 @@ import TodoItem from './TodoItem';
 import { TokenContext, UsernameContext } from '../Context/Context';
 import { ProgressBar } from "react-native-web";
 
+/**
+ * This component displays the list of todo items of a todo list.
+ * We made sure not to ask for the todo list entirely when we do modifications on the todo items.
+ */
 export default function TodoList({ route, navigation }) {
 
-    const {todoListId, todoListTitle} = route.params;
-    const [token, setToken] = useContext(TokenContext);
-    const [username, setUsername] = useContext(UsernameContext);
-    const [listToDo, setListToDo] = useState([]);
-    const [count, setCount] = useState(listToDo.filter((item)=>item.done).length);
-    const [newTodoText, setNewTodoText] = useState('');
-    const [showDone, setShowDone] = useState(true);
-    const [showNotDone, setShowNotDone] = useState(true);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(false);
+    const {todoListId, todoListTitle} = route.params; // Get the todo list id and title from the route params
+    const [token, setToken] = useContext(TokenContext); // Token context
+    const [username, setUsername] = useContext(UsernameContext); // Username context
+    const [listToDo, setListToDo] = useState([]); // Todo items state
+    const [count, setCount] = useState(listToDo.filter((item)=>item.done).length); // Count of done todo items
+    const [newTodoText, setNewTodoText] = useState(''); // New todo item text
+    const [showDone, setShowDone] = useState(true); // Show done todo items state
+    const [showNotDone, setShowNotDone] = useState(true); // Show not done todo items state
+    const [loading, setLoading] = useState(true); // Loading state
+    const [error, setError] = useState(false); // Error state
 
+    // Get the todo items of the todo list
     useEffect(() => {
         getTodoListItems(todoListId, username, token)
             .then(list => {
@@ -33,19 +38,7 @@ export default function TodoList({ route, navigation }) {
             });
     }, []);
 
-    if (loading) {
-        return (
-            <>
-                <ProgressBar indeterminate trackColor="#D1E3F6" />
-                <Text>Loading...</Text>
-            </>
-        );
-    }
-
-    if (error) {
-        return <Text>Error!</Text>;
-    }
-
+    // Change the done state of a todo item
     const changeItem = (id) => {
         const changedB = (!(((listToDo.find(item => item.id === id))).done));
         updateTodoItem(id, changedB, token).then(() => {
@@ -64,6 +57,7 @@ export default function TodoList({ route, navigation }) {
         });
     };
 
+    // Delete a todo item
     const deleteItem = (id) => {
         deleteTodoItem(id, token).then(() => {
             const newList = listToDo.filter((item) =>item.id!==id);
@@ -76,6 +70,7 @@ export default function TodoList({ route, navigation }) {
         });
     };
 
+    // Add a todo item
     const addItem = () => {
         createTodoItem(todoListId, newTodoText,token).then(item => {
             const newList = [...listToDo, item[0]];
@@ -88,6 +83,7 @@ export default function TodoList({ route, navigation }) {
         });
     };
 
+    // puts all items to done
     const allDone = () => {
         const newList = listToDo.map((item) => {
             updateTodoItem(item.id, true, token);
@@ -98,6 +94,7 @@ export default function TodoList({ route, navigation }) {
         setCount(newList.filter(item=>item.done).length);
     };
 
+    // puts all items to not done
     const allNotDone = () => {
         const newList = listToDo.map((item) => {
             updateTodoItem(item.id, false, token);
@@ -108,6 +105,20 @@ export default function TodoList({ route, navigation }) {
         setCount(0);
     };
 
+    if (loading) {
+        return (
+            <>
+                <ProgressBar indeterminate trackColor="#D1E3F6" />
+                <Text>Loading...</Text>
+            </>
+        );
+    }
+
+    if (error) {
+        return <Text>Error!</Text>;
+    }
+
+    // the display of the todo list
     return (
         <ScrollView style={styles.content} 
             contentContainerStyle={styles.content_container}

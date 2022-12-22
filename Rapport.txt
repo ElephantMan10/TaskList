@@ -1,0 +1,27 @@
+21801009 Alexander CAMATCHY
+21914304 Alix DANVY
+
+Chargé de TP 2A: LAMOTTE Jean-Luc
+
+Bonus réalisés:
+    - Ajout d'une barre de progression indiquant 
+    le nombre de tâches réalisés.
+
+    - Gestion de liste de second niveau
+
+    - Section d'administration des utilisateurs
+    /!\ Uniquement visible lorsqu'on est connecté avec la session
+    s appellant "admin"
+
+Note:
+    L'environnement neo4j utilisé offre un accès
+    quasi-administrateur sur les contenus de la base de données.
+    En effet, il ne requiert pas d'authentification pour
+    utiliser les requetes utilisees dans la gestion
+    des utilisateurs.
+    De plus, il peut y avoir des conflits lorsqu'on
+    a deux utilisateurs ayant le meme username et password.
+    (Ce qui n'est pas géré par la base de donnée donné.)
+
+    Par conséquent, restriction d'accès de la page Manage Users est 
+    purement esthétique.
