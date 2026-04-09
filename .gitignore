@@ -1,14 +1,32 @@
+# Dependencies
 node_modules/
 .expo/
+.expo-shared/
 dist/
-npm-debug.*
+web-build/
+
+# Native & Keys (Ta partie déjà présente)
 *.jks
 *.p8
 *.p12
 *.key
 *.mobileprovision
 *.orig.*
-web-build/
 
-# macOS
+# Environment variables (Crucial !)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+npm-debug.*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor & System
+.vscode/
+.idea/
 .DS_Store
+Thumbs.db
